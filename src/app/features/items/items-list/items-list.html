@@ -1,1 +1,3 @@
-<p>items-list works!</p>
+@for (item of items.value(); track item.id) {
+  <h2>{{ item.name }}</h2>
+}

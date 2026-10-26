@@ -1,5 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { ItemApi } from '../../../core/item-api';
+import { httpResource } from '@angular/common/http';
+import { Item } from '../../../models/item';
 
 @Component({
   imports: [],
@@ -8,6 +10,6 @@ import { ItemApi } from '../../../core/item-api';
   templateUrl: './items-list.html',
 })
 export class ItemsList {
-  protected readonly itemsService = inject(ItemApi);
-  protected items;
+  itemsService = inject(ItemApi);
+  items = httpResource<Item[]>(() => '/api/items');
 }
