@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { ItemApi } from '../../../core/item-api';
 
 @Component({
   imports: [],
@@ -6,4 +7,7 @@ import { Component } from '@angular/core';
   styleUrl: './items-list.css',
   templateUrl: './items-list.html',
 })
-export class ItemsList {}
+export class ItemsList {
+  protected readonly itemsService = inject(ItemApi);
+  protected items;
+}
