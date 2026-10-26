@@ -1,1 +1,14 @@
-/* You can add global styles to this file, and also import other style files */
+/* ==========================================================================
+   styles.css - Styles globaux de l'application (declares dans angular.json).
+   Reprend le design system TechCorp RH du module HTML/CSS.
+   L'ordre des imports compte : du plus general au plus specifique.
+   Pour utiliser votre propre design system, remplacez les fichiers de
+   src/styles/ par ceux de votre dossier maquettes/css/.
+   ========================================================================== */
+@import url('styles/reset.css');
+@import url('styles/tokens.css');
+@import url('styles/theme.css');
+@import url('styles/base.css');
+@import url('styles/layout.css');
+@import url('styles/components.css');
+@import url('styles/utilities.css');

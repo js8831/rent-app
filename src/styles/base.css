@@ -1,0 +1,81 @@
+/* ==========================================================================
+   base.css
+   Styles des balises HTML nues (pas de classes ici).
+   ========================================================================== */
+
+html {
+  font-family: var(--font-sans);
+  font-size: 100%; /* respecte la taille choisie par l'utilisateur */
+  color: var(--color-text);
+  background-color: var(--color-bg);
+}
+
+body {
+  font-size: var(--text-base);
+  line-height: var(--leading-normal);
+}
+
+h1,
+h2,
+h3,
+h4 {
+  line-height: var(--leading-tight);
+  font-weight: var(--weight-semibold);
+}
+
+h1 {
+  font-size: var(--text-2xl);
+}
+h2 {
+  font-size: var(--text-xl);
+}
+h3 {
+  font-size: var(--text-lg);
+}
+h4 {
+  font-size: var(--text-base);
+}
+
+@media (min-width: 64em) {
+  h1 {
+    font-size: var(--text-3xl);
+  }
+}
+
+p + p {
+  margin-top: var(--space-3);
+}
+
+a {
+  color: var(--color-primary);
+  text-underline-offset: 0.2em;
+}
+
+a:hover {
+  color: var(--color-primary-hover);
+}
+
+strong {
+  font-weight: var(--weight-semibold);
+}
+
+code {
+  font-family: var(--font-mono);
+  font-size: 0.9em;
+}
+
+hr {
+  border: 0;
+  border-top: 1px solid var(--color-border);
+  margin-block: var(--space-5);
+}
+
+/* --------------------------------------------------------------------------
+   Focus visible
+   Le contour n'apparait qu'a la navigation clavier, pas au clic souris.
+   Ne JAMAIS faire "outline: none" sans proposer une alternative.
+   -------------------------------------------------------------------------- */
+:focus-visible {
+  outline: 3px solid var(--color-focus);
+  outline-offset: 2px;
+}

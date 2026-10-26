@@ -1,0 +1,190 @@
+/* ==========================================================================
+   layout.css
+   Les grandes zones de la page : coquille applicative, pages d'authentification,
+   conteneurs et grilles. Approche mobile-first : les styles par defaut visent
+   le mobile, les media queries "min-width" ajoutent les colonnes.
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   Coquille applicative (app shell)
+   Mobile  : en-tete + contenu, la navigation est un panneau qui s'ouvre.
+   Desktop : en-tete sur toute la largeur, barre laterale fixe a gauche.
+   -------------------------------------------------------------------------- */
+.app {
+  display: grid;
+  grid-template-areas:
+    'header'
+    'main';
+  /* minmax(0, 1fr) : la colonne ne s'elargit jamais a cause d'un contenu
+     trop large (tableau). Sans cela, la page deborde sur mobile. */
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: var(--header-height) 1fr;
+  min-height: 100vh;
+}
+
+.app__header {
+  grid-area: header;
+  position: sticky;
+  top: 0;
+  z-index: 20;
+}
+
+.app__main {
+  grid-area: main;
+  padding: var(--space-5) var(--space-4);
+  /* min-width: 0 empeche un tableau large de faire deborder la grille. */
+  min-width: 0;
+}
+
+/* Sur mobile, la barre laterale est un panneau fixe cache hors ecran. */
+.app__sidebar {
+  position: fixed;
+  inset: var(--header-height) auto 0 0;
+  z-index: 10;
+  width: min(var(--sidebar-width), 85vw);
+  overflow-y: auto;
+  transform: translateX(-100%);
+  /* visibility: hidden retire aussi les liens de la tabulation clavier. */
+  visibility: hidden;
+  transition:
+    transform var(--transition),
+    visibility var(--transition);
+}
+
+.app--nav-open .app__sidebar {
+  transform: translateX(0);
+  visibility: visible;
+  box-shadow: var(--shadow-lg);
+}
+
+@media (min-width: 40em) {
+  .app__main {
+    padding: var(--space-6);
+  }
+}
+
+@media (min-width: 64em) {
+  .app {
+    grid-template-areas:
+      'header header'
+      'sidebar main';
+    grid-template-columns: var(--sidebar-width) minmax(0, 1fr);
+  }
+
+  .app__sidebar {
+    grid-area: sidebar;
+    position: sticky;
+    top: var(--header-height);
+    height: calc(100vh - var(--header-height));
+    width: auto;
+    transform: none;
+    visibility: visible;
+    box-shadow: none;
+  }
+}
+
+/* Largeur de lecture maximale du contenu principal. */
+.container {
+  max-width: var(--content-max);
+  margin-inline: auto;
+}
+
+/* --------------------------------------------------------------------------
+   Pages d'authentification (connexion, inscription)
+   -------------------------------------------------------------------------- */
+.auth {
+  display: grid;
+  min-height: 100vh;
+}
+
+.auth__aside {
+  display: none;
+}
+
+.auth__main {
+  display: grid;
+  place-items: center;
+  padding: var(--space-6) var(--space-4);
+}
+
+.auth__panel {
+  width: 100%;
+  max-width: 28rem;
+}
+
+@media (min-width: 64em) {
+  .auth {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .auth__aside {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: var(--space-7);
+    color: var(--color-on-primary);
+    background-color: var(--color-primary);
+  }
+}
+
+.auth__tagline {
+  font-size: var(--text-2xl);
+  font-weight: var(--weight-semibold);
+  line-height: var(--leading-tight);
+}
+
+/* --------------------------------------------------------------------------
+   En-tete de page : titre a gauche, actions a droite (passent dessous sur mobile)
+   -------------------------------------------------------------------------- */
+.page-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--space-4);
+  margin-bottom: var(--space-5);
+}
+
+.page-header__subtitle {
+  margin-top: var(--space-1);
+  color: var(--color-text-muted);
+}
+
+.page-header__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+/* --------------------------------------------------------------------------
+   Grilles reutilisables
+   -------------------------------------------------------------------------- */
+
+/* Autant de colonnes que possible, chacune d'au moins 13rem. Aucune media query. */
+.grid-auto {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr));
+  gap: var(--space-4);
+}
+
+/* Contenu principal + colonne secondaire sur grand ecran. */
+.grid-split {
+  display: grid;
+  gap: var(--space-5);
+}
+
+@media (min-width: 64em) {
+  .grid-split {
+    grid-template-columns: 2fr 1fr;
+    align-items: start;
+  }
+}
+
+/* Empile des blocs avec un espacement regulier. */
+.stack > * + * {
+  margin-top: var(--space-5);
+}
+
+.stack-sm > * + * {
+  margin-top: var(--space-3);
+}

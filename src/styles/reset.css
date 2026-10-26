@@ -1,0 +1,85 @@
+/* ==========================================================================
+   reset.css
+   Remet a plat les styles par defaut des navigateurs pour partir d'une base
+   identique sur Chrome, Firefox, Safari et Edge.
+   ========================================================================== */
+
+/* Le padding et la bordure sont inclus dans la largeur : plus de calculs. */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* On supprime les marges par defaut, on les gere avec nos tokens. */
+* {
+  margin: 0;
+}
+
+html {
+  /* Evite que le texte grossisse tout seul en mode paysage sur iOS. */
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  min-height: 100vh;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Les medias ne debordent jamais de leur conteneur. */
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+/* Les champs de formulaire heritent de la police du site. */
+input,
+button,
+textarea,
+select {
+  font: inherit;
+  color: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+/* Les longs mots (emails, URLs) passent a la ligne au lieu de deborder. */
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  overflow-wrap: break-word;
+}
+
+/* Les listes avec un role explicite (navigation) perdent leurs puces. */
+ul[role='list'],
+ol[role='list'] {
+  list-style: none;
+  padding: 0;
+}
+
+table {
+  border-collapse: collapse;
+}
+
+/* Accessibilite : on respecte le reglage systeme "reduire les animations". */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
