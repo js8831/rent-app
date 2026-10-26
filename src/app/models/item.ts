@@ -1,7 +1,7 @@
 export type Category = `ordinateur` | `tablette` | `video` | `audio`;
 export type Status = `available` | `maintenance`;
 
-export interface Items {
+export interface Item {
   id: number;
   name: string;
   category: Category;

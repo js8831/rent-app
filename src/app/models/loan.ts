@@ -1,4 +1,4 @@
-export interface Loans {
+export interface Loan {
   id: number;
   itemId: number;
   borrower: string;
