@@ -1,9 +1,0 @@
-<h2>Liste des prêts</h2>
-
-<ul>
-  @for (loan of loans(); track loan.id) {
-    <li>Prêt n°{{ loan.id }} - Emprunteur : {{ loan.borrower }}</li>
-  } @empty {
-    <li>Aucun prêt trouvé.</li>
-  }
-</ul>
