@@ -1,3 +1,17 @@
-@for (item of items.value(); track item.id) {
-  <h2>{{ item.name }}</h2>
+<h1 class="mb-4">Catalogue du matériel</h1>
+
+@if (store.itemsLoading() || store.loansLoading()) {
+  <p role="status">Chargement du catalogue...</p>
+} @else if (store.itemsError() || store.loansError()) {
+  <p class="alert alert--error" role="alert">{{ store.itemsError() || store.loansError() }}</p>
+} @else {
+  <ul class="grid-auto" role="list">
+    @for (item of store.items(); track item.id) {
+      <li>
+        <app-item-card [item]="item" [loans]="store.loans()" />
+      </li>
+    } @empty {
+      <li>Aucun matériel dans le catalogue.</li>
+    }
+  </ul>
 }
