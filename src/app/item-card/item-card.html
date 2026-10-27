@@ -1,6 +1,14 @@
 <article class="card">
-  <div class="card_header"></div>
+  <h2 class="card__title mb-4">
+    <a [routerLink]="['/materiel', item().id]">{{ item().name }}</a>
+  </h2>
+  <p>Catégorie : {{ item().category }}</p>
+  <p>Numéro de série : {{ item().serialNumber }}</p>
+  <p>
+    @if (itemAvailability() === 'available') {
+      <span class="badge badge--approved">Disponible</span>
+    } @else {
+      <span class="badge badge--pending">En maintenance</span>
+    }
+  </p>
 </article>
-
-<h2 class="card_name">titre</h2>
-<p class="card_category">test</p>
