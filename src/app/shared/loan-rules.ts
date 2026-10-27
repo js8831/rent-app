@@ -1,18 +1,14 @@
 import { Item } from '../models/item';
 import { Loan } from '../models/loan';
 
-export type Availability = 'available' | 'loaned' | 'maintenance';
+export type Availability = 'available' | 'maintenance';
 
 export function isLoaned(item: Item, loans: readonly Loan[]): boolean {
   return loans.some((loan) => loan.itemId === item.id && loan.returnedAt === null);
 }
 
 export function availability(item: Item, loans: readonly Loan[]): Availability {
-  if (item.status === 'maintenance') {
-    return 'maintenance';
-  }
-
-  return isLoaned(item, loans) ? 'loaned' : 'available';
+  return isLoaned(item, loans) ? 'available' : 'maintenance';
 }
 
 export function isOverdue(loan: Loan, today: Date): boolean {
