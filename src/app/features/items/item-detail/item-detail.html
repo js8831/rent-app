@@ -1,1 +1,58 @@
-<p>item-detail works!</p>
+<p class="mb-4"><a routerLink="/materiel">Retour au catalogue</a></p>
+
+@if (store.itemsLoading() || store.loansLoading()) {
+  <h1 class="mb-4">Détail du matériel</h1>
+  <p role="status">Chargement de la fiche...</p>
+} @else if (store.itemsError() || store.loansError()) {
+  <h1 class="mb-4">Fiche indisponible</h1>
+  <p class="alert alert--error" role="alert">{{ store.itemsError() || store.loansError() }}</p>
+} @else if (item(); as item) {
+  <h1 class="mb-4">{{ item.name }}</h1>
+
+  <dl class="card">
+    <dt>Catégorie</dt>
+    <dd>{{ item.category }}</dd>
+    <dt>Numéro de série</dt>
+    <dd>{{ item.serialNumber }}</dd>
+    <dt>Disponibilité</dt>
+    <dd>
+      @if (itemAvailability() === 'available') {
+        <span class="badge badge--approved">Disponible</span>
+      } @else {
+        <span class="badge badge--pending">Indisponible</span>
+      }
+    </dd>
+  </dl>
+
+  @if (itemAvailability() === 'available') {
+    <p class="mt-4">
+      <a class="btn btn--primary" [routerLink]="['/materiel', item.id, 'preter']"
+        >Prêter ce matériel</a
+      >
+    </p>
+  }
+  <h2 class="mt-5 mb-4">Historique des prêts</h2>
+
+  <ul class="stack-sm" role="list">
+    @for (loan of loans(); track loan.id) {
+      <li class="card">
+        <h3>{{ loan.borrower }}</h3>
+        <p>
+          <a [href]="'mailto:' + loan.borrowerEmail">{{ loan.borrowerEmail }}</a>
+        </p>
+        <p>Début : {{ loan.startDate | date: 'dd/MM/yyyy' }}</p>
+        <p>Retour prévu : {{ loan.dueDate | date: 'dd/MM/yyyy' }}</p>
+        @if (loan.returnedAt) {
+          <p>Rendu le {{ loan.returnedAt | date: 'dd/MM/yyyy' }}</p>
+        } @else {
+          <p>Prêt en cours</p>
+        }
+      </li>
+    } @empty {
+      <li>Aucun prêt pour ce matériel.</li>
+    }
+  </ul>
+} @else {
+  <h1 class="mb-4">Matériel introuvable</h1>
+  <p>Aucun matériel ne correspond à l'identifiant « {{ id() }} ».</p>
+}

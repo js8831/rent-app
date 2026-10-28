@@ -8,7 +8,7 @@ export function isLoaned(item: Item, loans: readonly Loan[]): boolean {
 }
 
 export function availability(item: Item, loans: readonly Loan[]): Availability {
-  return isLoaned(item, loans) ? 'available' : 'maintenance';
+  return isLoaned(item, loans) ? 'maintenance' : 'available';
 }
 
 export function isOverdue(loan: Loan, today: Date): boolean {

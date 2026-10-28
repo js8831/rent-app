@@ -1,0 +1,12 @@
+:host {
+  display: block;
+  overflow-wrap: anywhere;
+}
+
+dt {
+  font-weight: var(--weight-semibold);
+}
+
+dd + dt {
+  margin-top: var(--space-3);
+}
