@@ -1,0 +1,109 @@
+<p class="mb-4"><a [routerLink]="['/materiel', id()]">Retour à la fiche</a></p>
+
+@if (store.itemsLoading() || store.loansLoading()) {
+  <h1 class="mb-4">Prêter un matériel</h1>
+  <p role="status">Chargement du matériel...</p>
+} @else if (store.itemsError() || store.loansError()) {
+  <h1 class="mb-4">Prêt indisponible</h1>
+  <p class="alert alert--error" role="alert">{{ store.itemsError() || store.loansError() }}</p>
+} @else if (item(); as item) {
+  <h1 class="mb-4">Prêter : {{ item.name }}</h1>
+
+  @if (!available()) {
+    <p class="alert alert--warning" role="alert">Ce matériel n'est pas disponible pour un prêt.</p>
+  } @else {
+    <p class="mb-4">Tous les champs sont obligatoires. Le prêt commence aujourd'hui.</p>
+
+    @let borrower = loanForm.borrower();
+    @let borrowerEmail = loanForm.borrowerEmail();
+    @let dueDate = loanForm.dueDate();
+    @let formState = loanForm();
+
+    <form class="form card" [formRoot]="loanForm">
+      @if (submitAttempted() && formState.invalid()) {
+        <div class="alert alert--error" role="alert">
+          <div>
+            <p class="font-semibold">Veuillez corriger les erreurs suivantes :</p>
+            <ul>
+              @for (error of formState.errorSummary(); track $index) {
+                <li>{{ error.message }}</li>
+              }
+            </ul>
+          </div>
+        </div>
+      }
+
+      <div class="field">
+        <label class="field__label" for="borrower">Emprunteur</label>
+        <input
+          class="input"
+          id="borrower"
+          autocomplete="name"
+          [formField]="loanForm.borrower"
+          [attr.aria-invalid]="borrower.touched() && borrower.invalid()"
+          [attr.aria-describedby]="
+            borrower.touched() && borrower.invalid() ? 'borrower-error' : null
+          "
+        />
+        @if (borrower.touched() && borrower.invalid()) {
+          <p class="field__error" id="borrower-error">{{ borrower.errors()[0].message }}</p>
+        }
+      </div>
+
+      <div class="field">
+        <label class="field__label" for="borrower-email">E-mail de l'emprunteur</label>
+        <input
+          class="input"
+          id="borrower-email"
+          type="email"
+          autocomplete="email"
+          [formField]="loanForm.borrowerEmail"
+          [attr.aria-invalid]="borrowerEmail.touched() && borrowerEmail.invalid()"
+          [attr.aria-describedby]="
+            borrowerEmail.touched() && borrowerEmail.invalid() ? 'borrower-email-error' : null
+          "
+        />
+        @if (borrowerEmail.touched() && borrowerEmail.invalid()) {
+          <p class="field__error" id="borrower-email-error">
+            {{ borrowerEmail.errors()[0].message }}
+          </p>
+        }
+      </div>
+
+      <div class="field">
+        <label class="field__label" for="due-date">Date de retour prévue</label>
+        <input
+          class="input"
+          id="due-date"
+          type="date"
+          [formField]="loanForm.dueDate"
+          [attr.aria-invalid]="dueDate.touched() && dueDate.invalid()"
+          [attr.aria-describedby]="
+            dueDate.touched() && dueDate.invalid()
+              ? 'due-date-hint due-date-error'
+              : 'due-date-hint'
+          "
+        />
+        <p class="field__hint" id="due-date-hint">
+          Choisissez une date entre demain et dans 14 jours.
+        </p>
+        @if (dueDate.touched() && dueDate.invalid()) {
+          <p class="field__error" id="due-date-error">{{ dueDate.errors()[0].message }}</p>
+        }
+      </div>
+
+      @if (serverError()) {
+        <p class="alert alert--error" role="alert">{{ serverError() }}</p>
+      }
+
+      <div class="form__actions">
+        <button class="btn btn--primary" type="submit" [disabled]="formState.submitting()">
+          Enregistrer le prêt
+        </button>
+      </div>
+    </form>
+  }
+} @else {
+  <h1 class="mb-4">Matériel introuvable</h1>
+  <p>Aucun matériel ne correspond à l'identifiant « {{ id() }} ».</p>
+}
