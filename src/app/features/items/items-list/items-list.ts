@@ -1,6 +1,6 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { Store } from '../../../core/stores/store';
-import { ItemCard } from '../../../item-card/item-card';
+import { ItemCard } from '../item-card/item-card';
 
 @Component({
   imports: [ItemCard],

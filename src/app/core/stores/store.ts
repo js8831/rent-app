@@ -3,8 +3,8 @@ import { firstValueFrom } from 'rxjs';
 import { Item } from '../../models/item';
 import { Loan } from '../../models/loan';
 import { availability } from '../../shared/loan-rules';
-import { ItemApi } from '../item-api';
-import { LoanApi, LoanDraft } from '../loan-api';
+import { ItemApi } from '../api/item-api';
+import { LoanApi, LoanDraft } from '../api/loan-api';
 
 @Service()
 export class Store {

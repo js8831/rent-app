@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Service } from '@angular/core';
 import { map, Observable } from 'rxjs';
-import { Loan } from '../models/loan';
+import { Loan } from '../../models/loan';
 
 const API_URL = '/api/loans';
 

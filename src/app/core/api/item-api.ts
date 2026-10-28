@@ -1,5 +1,5 @@
 import { inject, Service } from '@angular/core';
-import { Item } from '../models/item';
+import { Item } from '../../models/item';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 

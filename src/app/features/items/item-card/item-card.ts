@@ -1,8 +1,8 @@
 import { Component, computed, input } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { Item } from '../models/item';
-import { Loan } from '../models/loan';
-import { availability } from '../shared/loan-rules';
+import { Item } from '../../../models/item';
+import { Loan } from '../../../models/loan';
+import { availability } from '../../../shared/loan-rules';
 
 @Component({
   imports: [RouterLink],
